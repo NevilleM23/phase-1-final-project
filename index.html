@@ -10,11 +10,84 @@
 
   <body>
     <header>
-        <h1>PokeOnlineDex</h1>
-        <nav></nav>
+      <h1>PokeOnlineDex</h1>
+      <div class="controls">
+        <div class="search-container">
+          <input type="text" id="search" placeholder="Search Pokémon...">
+        </div>
+        <div class="view-options">
+          <button id="show-all" class="active-view">All Pokémon</button>
+          <button id="show-favorites">Favorites <span id="favorite-count">(0)</span></button>
+          <button id="add-pokemon-btn"><i class="fas fa-plus"></i> Add Pokémon</button>
+        </div>
+        <div id="type-filters" class="type-filters"></div>
+      </div>
     </header>
-    <div class = 'container'>
+  
 
+    <main>
+      <div id = "pokemon-container" class ="pokemon grid"></div>
+    </main> 
+
+    <div id ="add-modal" class = "modal">
+      <div class = "modal-content">
+        <span class ="close">&times;</span>
+        <h2>Add A New Pokemon</h2>
+        <form id="pokemon-form">
+          <div class ="form-group">
+            <label for="name">Name</label>
+            <input type ="text" id ="name" required>
+          </div>
+          <div class ="form-group">
+            <label for="type">Type:</label>
+            <select id ="type" required>
+              <option value="fire">Fire</option>
+              <option value="water">Water</option>
+              <option value="bug">Bug</option>
+              <option value="dark">Dark</option>
+              <option value="dragon">Dragon</option>
+              <option value="electric">Electric</option>
+              <option value="fairy">Fairy</option>
+              <option value="fighting">Fighting</option>
+              <option value="flying">Flying</opton>
+              <option value="ghost">Ghost</option>
+              <option value="grass">Grass</option>
+              <option value="ground">Ground</option>
+              <option value="ice">Ice</option>
+              <option value="normal">Normal</option>
+              <option value="poison">Poison</option>
+              <option value="pyschic">Pyschic</option>
+              <option value="rock">Rock</option>
+              <option value="steel">Steel</option>
+            </select>
+          </div>
+          <div class ='form-group'>
+            <label for="hp">HP:</label>
+            <input type="number" id ="hp" min ="1"  max= "255" required>
+          </div>
+          <div class="form-group">
+            <label for ="attack">Attack:</label>
+            <input type="number" id="attack" min="1" max="255" required>
+          </div>
+          <div class="form-group">
+            <label for="image">Image Url:</label>
+            <input type="url" id="Image" required>
+          </div>
+          <button type="submit">Submit New Pokemon</button>
+        </form>
+      </div>
     </div>
+
+    <div id="detail-modal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="pokemon-detail"></div>
+      </div>
+    </div>
+  
+
+
+
+    <script src = 'index.js'></script>
   </body>
 </html>
