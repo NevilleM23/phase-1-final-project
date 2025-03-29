@@ -1,6 +1,6 @@
 let apiPokemon = []
 let customPokemon = JSON.parse(localStorage.getItem('customPokemon')) || []
-let favourites = JSON.parse(localStorage.getItem('favourite')) || []
+let favourites = JSON.parse(localStorage.getItem('favouritea')) || []
 
 //elements
 const pokemonContainer = document.getElementById('pokemon-container')
@@ -17,15 +17,15 @@ const favouriteCount = document.getElementById('favourite-count')
 //initalizes app
 document.addEventListener('DOMContentLoaded', async() =>{
     await loadPokemon()
-    renderTypeFilets()
+    renderTypeFilters()
     updateFavouriteCount()
-    setUpEventListeners()
+    setupEventListeners()
 })  
 
 //Functions from app
 async function loadPokemon() {
     const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=25')
-    const data = await response.json
+    const data = await response.json()
 
     apiPokemon = await Promise.all(
     data.results.map(async (pokemon) => {
@@ -114,3 +114,99 @@ function renderPokemon(pokemonList) {
 
   
 //event listeners
+function setupEventListeners() {
+    // Search
+    searchInput.addEventListener('input', (e) => {
+      const term = e.target.value.toLowerCase();
+      const filtered = getAllPokemon().filter(p => 
+        p.name.toLowerCase().includes(term)
+      );
+      renderPokemon(filtered);
+    });
+    
+    // Type Filters
+    typeFilters.addEventListener('click', (e) => {
+      if (e.target.classList.contains('type-btn')) {
+        const type = e.target.dataset.type;
+        const filtered = getAllPokemon().filter(p => 
+          p.types?.some(t => t.type.name === type)
+        );
+        renderPokemon(filtered);
+      }
+    });
+    
+    // Favorites View
+    showFavouritesButton.addEventListener('click', () => {
+      const favPokemon = getAllPokemon().filter(p => favourites.includes(p.id));
+      renderPokemon(favPokemon);
+      showAllButton.classList.remove('active-view');
+      showFavouritesButton.classList.add('active-view');
+    }); 
+
+    // All Pokémon View
+    showAllButton.addEventListener('click', () => {
+        renderPokemon(getAllPokemon());
+        showFavouritesButton.classList.remove('active-view');
+        showAllButton.classList.add('active-view');
+    });
+    
+    // Add Pokémon Modal
+    addButton.addEventListener('click', () => {
+        addModal.style.display = 'block';
+    });
+    
+    // Close Modals
+    document.querySelectorAll('.close').forEach(btn => {
+        btn.addEventListener('click', () => {
+        addModal.style.display = 'none';
+        detailModal.style.display = 'none';
+        });
+    });
+    
+    // Close when clicking outside
+    window.addEventListener('click', (e) => {
+        if (e.target === addModal) addModal.style.display = 'none';
+        if (e.target === detailModal) detailModal.style.display = 'none';
+    });
+    
+    // Form Submission
+    addForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+ 
+        const newPokemon = {
+            id: Date.now(),
+            name: document.getElementById('name').value,
+            types: [{ type: { name: document.getElementById('type').value } }],
+            stats: [
+              { base_stat: parseInt(document.getElementById('hp').value), stat: { name: 'hp' } },
+              { base_stat: parseInt(document.getElementById('attack').value), stat: { name: 'attack' } },
+            ],
+            sprites: { front_default: document.getElementById('pokemon-image').value || 'custom.png' }
+          };
+          
+          customPokemon.push(newPokemon);
+          localStorage.setItem('customPokemon', JSON.stringify(customPokemon));
+          renderPokemon(getAllPokemon());
+          renderTypeFilters();
+          addModal.style.display = 'none';
+          addForm.reset();
+        });
+        
+        // Card Clicks (event delegation)
+        pokemonContainer.addEventListener('click', (e) => {
+          const card = e.target.closest('.pokemon-card');
+          const favouriteBtn = e.target.closest('.favourite-btn');
+
+          if (favouriteBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            const pokemonId = parseInt(favouriteBtn.dataset.id);
+            toggleFavourite(pokemonId);
+          } else if (card) {
+            const pokemonId = parseInt(card.dataset.id);
+            const pokemon = getAllPokemon().find(p => p.id === pokemonId);
+            showPokemonDetail(pokemon);
+          }
+        });
+      }
