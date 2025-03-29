@@ -10,14 +10,14 @@
 
   <body>
     <header>
-      <h1>PokeOnlineDex</h1>
+      <h1>PokeOnlineDex</h1> 
       <div class="controls">
         <div class="search-container">
           <input type="text" id="search" placeholder="Search Pokémon...">
         </div>
         <div class="view-options">
           <button id="show-all" class="active-view">All Pokémon</button>
-          <button id="show-favorites">Favorites <span id="favorite-count">(0)</span></button>
+          <button id="show-favourites">Favourites <span id="favourite-count">(0)</span></button>
           <button id="add-pokemon-btn"><i class="fas fa-plus"></i> Add Pokémon</button>
         </div>
         <div id="type-filters" class="type-filters"></div>
@@ -28,7 +28,7 @@
     <main>
       <div id = "pokemon-container" class ="pokemon grid"></div>
     </main> 
-    
+
 
     <div id ="add-modal" class = "modal">
       <div class = "modal-content">
@@ -71,8 +71,8 @@
             <input type="number" id="attack" min="1" max="255" required>
           </div>
           <div class="form-group">
-            <label for="image">Image Url:</label>
-            <input type="url" id="Image" required>
+            <label for="image">Image Url Optional: </label>
+            <input type="url" id="pokemon-image" >
           </div>
           <button type="submit">Submit New Pokemon</button>
         </form>
