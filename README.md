@@ -9,7 +9,7 @@ An online pokedex that allows a user to peruse on diffrent pokemon types and fav
 
 - **View pokemon card details**: Users will be able to view a plethora of diffrent pokemons including their names, stats, types, abilities etc.
 - **Search functionality**: Users be able to seach through the index accordingly through pokemon names and filter the pokemon by their types 
-- **Update and Add Pokemon**: Users will be able to make updates to pokemon where they see fit, and add entirely new pokemon to the sitr
+- **Add Pokemon**: Users will be able to  add entirely new pokemon to the site
 - **Favourite A Pokemon**: Users will be able to favorite a pokemon that they like, being represented by a red heart and being saved into a favorite section of the site 
 ---  
 
